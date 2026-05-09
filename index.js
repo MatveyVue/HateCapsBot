@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 const composer = require('./composer'); // ваш файл с кодом выше
 
-const BOT_TOKEN = '8291475798:AAHMVeNhqwhQKju8dZnYUP3x7LIAu-kldxs';
+const BOT_TOKEN = '8281942154:AAEzY8WO9rz_Wu_GUGSR-pcZ9MAPyo8n7a4';
 
 const bot = new Telegraf(BOT_TOKEN);
 
