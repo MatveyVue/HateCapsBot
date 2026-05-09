@@ -1,22 +1,31 @@
 const { Telegraf } = require('telegraf');
-const composer = require('./composer'); // ваш файл с кодом выше
+const express = require('express');
 
-const BOT_TOKEN = '8281942154:AAEzY8WO9rz_Wu_GUGSR-pcZ9MAPyo8n7a4';
+const app = express();
 
-const bot = new Telegraf(BOT_TOKEN);
+const apiToken = '8281942154:AAEzY8WO9rz_Wu_GUGSR-pcZ9MAPyo8n7a4';
 
-// Используем composer
-bot.use(composer);
+const bot = new Telegraf(apiToken, {
+    telegram: {
+        webhookReply: false
+    }
+});
 
-// Запускаем бота
-bot.launch()
-    .then(() => {
-        console.log('🤖 Gjob bot started successfully!');
-    })
-    .catch((err) => {
-        console.error('Error starting bot:', err);
-    });
+app.use(express.json());
+app.use(bot.webhookCallback(`/bot${apiToken}`));
 
-// Включим graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+app.get(`/`, async (_req, res) => {
+    try {
+        const url = `https://hate-caps-bot.vercel.app/bot${apiToken}`;
+        await bot.telegram.setWebhook(url);
+        res.send("200");
+    } catch {
+        res.send('502')
+    }
+})
+
+bot.use(require('./composer/text.js'));
+
+app.listen(3212, () => {
+    console.log('Server is running on port 3212');
+});
