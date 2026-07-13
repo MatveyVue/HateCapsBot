@@ -4,7 +4,7 @@ const composer = new Composer();
 
 composer.start(async (ctx) => {
     const buttons = Markup.inlineKeyboard([
-        [Markup.button.url('App', 'https://t.me/HateCapsBot/Hatecaps')],
+        [Markup.button.url('App', 'https://t.me/HateCapsBot?startapp')],
         [Markup.button.url('Community', 'https://t.me/@hategroups')],
     ]);
 
